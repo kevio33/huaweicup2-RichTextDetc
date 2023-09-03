@@ -22,4 +22,34 @@
 
 ②有简单的图形界面，可交互
 
+> 用户选择文件位置——可以是压缩文件，也可以是文件夹
+
 ③拖入文件即可自动解析，并且输出分析结果
+
+
+
+# 其他
+
+本地创建环境：
+
+- python=3.9.17
+
+
+
+每次开发流程：
+
+- 拉项目
+- 下`requireents.txx`依赖
+- 写代码
+- 更新依赖`pip freeze > ./requirements.txt`
+- 上传代码
+
+## 项目依赖
+
+将所有依赖添加进`requirements.txt`，使用命令：
+
+```shell
+pip freeze > ./requirements.txt
+```
+
+> 参考：https://www.jianshu.com/p/acb3205aea54
