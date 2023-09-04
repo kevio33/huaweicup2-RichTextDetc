@@ -36,10 +36,10 @@
 
 
 
-每次开发流程：
+**每次开发流程：**
 
 - 拉项目
-- 下`requireents.txx`依赖
+- 下`requireents.txt`依赖
 - 写代码
 - 更新依赖`pip freeze > ./requirements.txt`
 - 上传代码

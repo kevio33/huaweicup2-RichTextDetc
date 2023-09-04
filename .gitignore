@@ -2,3 +2,4 @@
 *.rar
 *.zip
 *.tar
+__pycache__/
