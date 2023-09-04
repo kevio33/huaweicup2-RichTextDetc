@@ -3,3 +3,4 @@
 *.zip
 *.tar
 __pycache__/
+.vscode/
