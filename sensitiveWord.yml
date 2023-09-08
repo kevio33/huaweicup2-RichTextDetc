@@ -1,0 +1,14 @@
+# 保存处理对应文件代码的路径
+sensitive_word:
+  # 用户
+  - username
+  - user
+  - root
+  # 密码
+  - password
+  - pass
+  - pwd
+  - psw
+  # ip\端口
+  - ip
+  - port

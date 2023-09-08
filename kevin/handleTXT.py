@@ -2,7 +2,10 @@
 """
     处理txt文件
 """
-def handleTxt(fileName):
 
-    print(fileName)
+import os
+
+def handleTxt(fileName,filePath):
+
+    print(filePath,fileName,sep=',')
 

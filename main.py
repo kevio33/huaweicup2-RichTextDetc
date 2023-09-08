@@ -13,9 +13,9 @@ from kevin.handleTXT import handleTxt
 
 fileQue = Queue()# 队列保存所有子文件和子目录信息
 
-f = open('fileData.yml', 'r', encoding='utf-8')# 读yml文件
-cfg = f.read()
-dyml = yaml.load(cfg,Loader=yaml.FullLoader)  # 用load方法转字典
+# f = open('fileData.yml', 'r', encoding='utf-8')# 读yml文件
+# cfg = f.read()
+# dyml = yaml.load(cfg,Loader=yaml.FullLoader)  # 用load方法转字典
 
 
 # 文件类，保存文件路径和父目录名字
@@ -44,12 +44,12 @@ def unzipFile(filePath,desPath=None):
     rar.close()
 
 # 处理目录
-def handleDir(dirPath):
-    print("dir:"+dirPath)
+# def handleDir(dirPath):
+#     print("dir:"+dirPath)
 
 # 处理文件
-def handleFile(filePath):
-    print("file:"+filePath)
+# def handleFile(filePath):
+#     print("file:"+filePath)
 
 
 '''
@@ -82,7 +82,7 @@ def handleQue():
             extend = extend[-1]
 
         if extend == 'txt':
-           handleTxt(i.fileName)
+           handleTxt(i.fileName,i.filePath)
         elif extend == 'jpg': #这里重复逻辑判断
             pass 
 
