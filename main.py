@@ -45,14 +45,6 @@ def unzipFile(filePath,desPath=None):
     # 关闭 RAR 文件
     rar.close()
 
-# 处理目录
-# def handleDir(dirPath):
-#     print("dir:"+dirPath)
-
-# 处理文件
-# def handleFile(filePath):
-#     print("file:"+filePath)
-
 
 '''
     统计解压目录下面的目录和文件
@@ -75,7 +67,8 @@ def listUnzipFile(filePath):
     可以考虑线程提取文件信息
 """
 def handleQue():
-
+    pbar = tqdm(total=fileQue.qsize())
+    
     while not fileQue.empty():
         i = fileQue.get()
         extend = i.fileName
@@ -92,16 +85,16 @@ def handleQue():
         elif extend == 'txt':
             handleTxt(i.fileName,i.filePath)
 
+        pbar.update(1)#更新进度条
+    
+    pbar.close()
 
         
 if __name__ == "__main__":
     unzipFile('题目1：富文本敏感信息泄露检测.rar') #解压缩文件
     listUnzipFile('.\赛题材料')#分析代码
     handleQue() # 处理队列里面记录的文件
-    # pbar = tqdm(total=100)
-    # for i in range(10):
-    #     pbar.update(10)
-    # pbar.close()
+
 
 
 
