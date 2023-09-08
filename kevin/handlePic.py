@@ -18,6 +18,7 @@ def handleJPGorPNG(fileName,filePath):
     print(result)
 
 
+
 if __name__ == '__main__':
     cv_img= cv2.imdecode(np.fromfile('./HCC维护信息.png',dtype=np.uint8),-1)#先转换格式为np，否则中文乱码读不到文件
     handleJPGorPNG('carbon.jpg',cv_img)
