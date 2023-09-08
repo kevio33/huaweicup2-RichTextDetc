@@ -5,11 +5,13 @@
 3.读取所有文件的内容，并提取敏感信息
 '''
 import os
-from typing import Any
 import rarfile
 from queue import Queue
+
 import yaml
 from kevin.handlePic import handleJPG
+from msn.handleExcel import handleExcel
+
 
 fileQue = Queue()# 队列保存所有子文件和子目录信息
 
@@ -83,12 +85,12 @@ def handleQue():
             # 文件后缀
             extend = extend[-1]
 
-        if extend == 'txt': # 处理txt文本
-        #    handleTxt(i.fileName,i.filePath)
-            pass
-        elif extend == 'jpg': #这里重复逻辑判断
+        if extend == 'jpg': #这里重复逻辑判断
             handleJPG(i.fileName,i.filePath)
-            
+        elif extend == 'xlsx': #这里重复逻辑判断
+            handleExcel(i.fileName,i.filePath)
+
+
         
 if __name__ == "__main__":
     unzipFile('题目1：富文本敏感信息泄露检测.rar') #解压缩文件
