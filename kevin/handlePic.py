@@ -12,6 +12,7 @@ import os
 def handleJPG(fileName,filePath):
     print(filePath,sep=",")
     reader = easyocr.Reader(['ch_sim','en'],gpu=False) # this needs to run only once to load the model into memory
-    result = reader.readtext(filePath,detail=0) 
+    result = reader.readtext(fileName,detail=0) 
     print(result)
 
+handleJPG('carbon.jpg','')
