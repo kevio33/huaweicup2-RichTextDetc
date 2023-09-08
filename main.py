@@ -7,9 +7,9 @@
 import os
 import rarfile
 from queue import Queue
+from tqdm import tqdm
 
-import yaml
-from kevin.handlePic import handleJPG
+from kevin.handlePic import handleJPGorPNG
 from msn.handleExcel import handleExcel
 from msn.handleTxt import handleTxt
 
@@ -85,12 +85,11 @@ def handleQue():
             # 文件后缀
             extend = extend[-1]
 
-        if extend == 'jpg': #这里重复逻辑判断
-            #handleJPG(i.fileName,i.filePath)
-            pass
+        if extend == 'jpg' or extend == 'png': #这里重复逻辑判断
+            handleJPGorPNG(i.fileName,i.filePath)
         elif extend == 'xlsx': #这里重复逻辑判断
             handleExcel(i.fileName,i.filePath)
-        elif extend =='txt':
+        elif extend == 'txt':
             handleTxt(i.fileName,i.filePath)
 
 
@@ -99,7 +98,10 @@ if __name__ == "__main__":
     unzipFile('题目1：富文本敏感信息泄露检测.rar') #解压缩文件
     listUnzipFile('.\赛题材料')#分析代码
     handleQue() # 处理队列里面记录的文件
-   
+    # pbar = tqdm(total=100)
+    # for i in range(10):
+    #     pbar.update(10)
+    # pbar.close()
 
 
 

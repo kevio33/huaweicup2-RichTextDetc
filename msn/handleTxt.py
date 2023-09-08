@@ -23,6 +23,6 @@ def handleTxt(fileName,filePath):
 
 
 def save_to_txt(data, output_path):
-    with open(output_path, 'w') as file:
+    with open(output_path, 'a') as file:
         for item in data:
             file.write(item[0] + '\n')  # item 是一个tuple, 我们需要其第一个元素

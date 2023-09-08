@@ -22,11 +22,11 @@ def handleExcel(fileName,filePath):
             if row[col_num] is not None:
                 sensitive_data.append(row[col_num])
 
-    save_to_txt(sensitive_data, "./outputExcel.txt")
+    save_to_txt(sensitive_data, "outputExcel.txt")
 
 
 def save_to_txt(data, output_path):
-    with open(output_path, 'w') as file:
+    with open(output_path, 'a') as file:
         for item in data:
             file.write(str(item) + '\n')
 
