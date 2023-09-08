@@ -5,11 +5,10 @@
 3.读取所有文件的内容，并提取敏感信息
 '''
 import os
-from typing import Any
 import rarfile
 from queue import Queue
-import yaml
 from kevin.handleTXT import handleTxt
+from msn.handleExcel import handleExcel
 
 fileQue = Queue()# 队列保存所有子文件和子目录信息
 
@@ -83,8 +82,8 @@ def handleQue():
 
         if extend == 'txt':
            handleTxt(i.fileName,i.filePath)
-        elif extend == 'jpg': #这里重复逻辑判断
-            pass 
+        elif extend == 'xlsx': #这里重复逻辑判断
+            handleExcel(i.fileName,i.filePath)
 
 
         
