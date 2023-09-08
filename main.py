@@ -9,7 +9,7 @@ from typing import Any
 import rarfile
 from queue import Queue
 import yaml
-from kevin.handleTXT import handleTxt
+from kevin.handlePic import handleJPG
 
 fileQue = Queue()# 队列保存所有子文件和子目录信息
 
@@ -57,12 +57,14 @@ def unzipFile(filePath,desPath=None):
 '''
 def listUnzipFile(filePath):
     # filePath = './赛题材料'
+    # current_path = os.path.abspath('..')
     for it in os.scandir(filePath):# 遍历目录下的文件/子目录
         # 分文件和目录进行处理
         if it.is_dir():
             listUnzipFile(filePath=it.path)
         else:
-            file = FileInfo(fileName=it.name,filePath=it.path)
+
+            file = FileInfo(fileName=it.name,filePath=os.path.abspath(it.path))
             fileQue.put(file) # 如果是文件，则将文件放入队列
 
 
@@ -81,12 +83,12 @@ def handleQue():
             # 文件后缀
             extend = extend[-1]
 
-        if extend == 'txt':
-           handleTxt(i.fileName,i.filePath)
+        if extend == 'txt': # 处理txt文本
+        #    handleTxt(i.fileName,i.filePath)
+            pass
         elif extend == 'jpg': #这里重复逻辑判断
-            pass 
-
-
+            handleJPG(i.fileName,i.filePath)
+            
         
 if __name__ == "__main__":
     unzipFile('题目1：富文本敏感信息泄露检测.rar') #解压缩文件
