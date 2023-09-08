@@ -11,7 +11,7 @@ from queue import Queue
 import yaml
 from kevin.handlePic import handleJPG
 from msn.handleExcel import handleExcel
-
+from msn.handleTxt import handleTxt
 
 fileQue = Queue()# 队列保存所有子文件和子目录信息
 
@@ -86,9 +86,12 @@ def handleQue():
             extend = extend[-1]
 
         if extend == 'jpg': #这里重复逻辑判断
-            handleJPG(i.fileName,i.filePath)
+            #handleJPG(i.fileName,i.filePath)
+            pass
         elif extend == 'xlsx': #这里重复逻辑判断
             handleExcel(i.fileName,i.filePath)
+        elif extend =='txt':
+            handleTxt(i.fileName,i.filePath)
 
 
         

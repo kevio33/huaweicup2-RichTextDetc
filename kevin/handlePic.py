@@ -2,7 +2,7 @@
     处理图片
 '''
 
-import easyocr
+#import easyocr
 import os
 
 '''
@@ -11,7 +11,7 @@ import os
 '''
 def handleJPG(fileName,filePath):
     print(filePath,sep=",")
-    reader = easyocr.Reader(['ch_sim','en'],gpu=False) # this needs to run only once to load the model into memory
-    result = reader.readtext(filePath,detail=0) 
-    print(result)
+   # reader = easyocr.Reader(['ch_sim','en'],gpu=False) # this needs to run only once to load the model into memory
+    #result = reader.readtext(filePath,detail=0)
+    #print(result)
 
