@@ -45,14 +45,6 @@ def unzipFile(filePath,desPath=None):
     # 关闭 RAR 文件
     rar.close()
 
-# 处理目录
-# def handleDir(dirPath):
-#     print("dir:"+dirPath)
-
-# 处理文件
-# def handleFile(filePath):
-#     print("file:"+filePath)
-
 
 '''
     统计解压目录下面的目录和文件
