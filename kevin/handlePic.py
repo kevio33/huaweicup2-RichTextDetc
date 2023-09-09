@@ -6,25 +6,61 @@ import easyocr
 import os
 import cv2
 import numpy as np
+
+
+import sys
+sys.path.append(r'..')
+'''python import模块时， 是在sys.path里按顺序
+'''
+import utils.matchSensitive as matchSensitive
+
+
 '''
     用到easyOCR
     路径包含中文会乱码，因此将路径转换为numpy格式
 '''
 def handleJPGorPNG(fileName,filePath):
-    # print(filePath,sep=",")
     cv_img= cv2.imdecode(np.fromfile(filePath,dtype=np.uint8),-1)#先转换格式为np，否则中文乱码读不到文件
     reader = easyocr.Reader(['ch_sim','en'],gpu=False) # this needs to run only once to load the model into memory
     result = reader.readtext(cv_img,detail=0) 
+    # print(result)
+    sentiWord = matchSensitive.readYaml()# 返回铭感词字典
+    sentiWord = sentiWord['sensitive_word']
+    
+    extract = matchSensiti(origin_list=result,senti_list=sentiWord)
     dic = {}
-    dic[fileName] = result
-    # print(dic)
+    dic[fileName+'源']=sentiWord
+    dic[fileName+'提取'] = extract 
     file = open(fileName+'.txt',"w",encoding='utf-8')
     file.write(str(dic))
     file.close()
 
-
-
-
+'''
+    匹配铭感信息算法
+    origin_str:要匹配的目标list
+    senti_list:铭感词的目标list
+'''
+def matchSensiti(origin_list,senti_list):
+    extract = []
+    # 遍历读出来的元素，然后匹配铭感词
+    # TODO 上下文匹配不是很号，只匹配到关键词
+    for item in origin_list:
+        item = item.lower()
+        for word in senti_list:
+            if item.find(word) >= 0:
+                # 匹配铭感词
+                extract.append(item)
+                break
+    return extract          
+    
 if __name__ == '__main__':
-    # cv_img= cv2.imdecode(np.fromfile('E:\huaweicup\huaweicup2-RichTextDetc\赛题材料\carbon.jpg',dtype=np.uint8),-1)#先转换格式为np，否则中文乱码读不到文件
+    cv_img= cv2.imdecode(np.fromfile('E:\huaweicup\huaweicup2-RichTextDetc\赛题材料\carbon.jpg',dtype=np.uint8),-1)#先转换格式为np，否则中文乱码读不到文件
     handleJPGorPNG('carbon.jpg','E:\huaweicup\huaweicup2-RichTextDetc\赛题材料\carbon.jpg')
+    # sentiWord = matchSensitive.readYaml()# 返回铭感词字典
+    # sentiWord = sentiWord['sensitive_word']
+    # print(sentiWord)
+
+    # import pytesseract
+    # from PIL import Image
+    # text = pytesseract.image_to_string(Image.open('E:\huaweicup\huaweicup2-RichTextDetc\赛题材料\HCC维护信息.png'),lang='ch_sim')
+    # print(text)
