@@ -14,6 +14,7 @@ sys.path.append(r'..')
 '''
 import utils.matchSensitive as matchSensitive
 
+current_directory = os.path.dirname(os.path.abspath(__file__))
 
 '''
     用到easyOCR
@@ -29,9 +30,10 @@ def handleJPGorPNG(fileName,filePath):
     
     extract = matchSensiti(origin_list=result,senti_list=sentiWord)
     dic = {}
-    dic[fileName+'源']=sentiWord
+    dic[fileName+'源']=sentiWord + '\n'
     dic[fileName+'提取'] = extract 
-    file = open(fileName+'.txt',"w",encoding='utf-8')
+    savePath = os.path.join(current_directory,fileName,".txt")
+    file = open(savePath,"w",encoding='utf-8')
     file.write(str(dic))
     file.close()
 

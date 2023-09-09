@@ -16,19 +16,53 @@ minganword_regex = r"(.*)(研发|邮箱)(.*)"  #研发、邮箱
 all_regex = re.compile(f"({ip_regex}|{email_regex}|{username_regex}|{password_regex}|{minganword_regex})")
 
 
-
+'''
+    处理txt文件
+'''
 def handleTxt(fileName,filePath):
 
+    # 原代码
+    # with open(filePath, 'r',encoding='utf-8') as file:
+    #     content = file.read()
+    #     # print(content)
+    #     sensitive_data = re.findall(all_regex, content)
+    #     current_directory = os.path.dirname(os.path.abspath(__file__))
+    #     output_path = os.path.join(current_directory, "outputTxt.txt")
+    #     save_to_txt(sensitive_data, output_path)
+    
+    current_directory = os.path.dirname(os.path.abspath(__file__))
+    output_path = os.path.join(current_directory, "outputTxt.txt")
+    isR = True # 是否是换行符号
+    readRes =[] # 因为读取的结果是一个列表，所有定义列表保存所有读取结果
+    for line in open(filePath, 'r',encoding='utf-8'): 
+        # print(line) 
+        if line != '\n':
+            sensitive_data = re.findall(all_regex, line)
+            readRes.extend(sensitive_data)
+            isR = True
+        else:# 如果是换行符，直接写入文件，不进行正则匹配
+            if isR is True:
+                readRes.extend(line)
+                isR = False
+    save_to_txt(readRes, output_path)# 保存结果
 
-    with open(filePath, 'r') as file:
-        content = file.read()
-        sensitive_data = re.findall(all_regex, content)
-        current_directory = os.path.dirname(os.path.abspath(__file__))
-        output_path = os.path.join(current_directory, "outputTxt.txt")
-        save_to_txt(sensitive_data, output_path)
-
-
+'''
+    写入提取信息
+'''
 def save_to_txt(data, output_path):
-    with open(output_path, 'w') as file:
+    # 原代码
+    # with open(output_path, 'a',encoding='utf-8') as file:
+    #     for item in data:
+    #         file.write(item[0] + '\n')
+
+    with open(output_path, 'w',encoding='utf-8') as file:
         for item in data:
-            file.write(item[0] + '\n')
+            # 如果本身换行符不需要再加换行符
+            if item != '\n':
+                file.write(item[0] + '\n')
+            else:
+                file.write(item[0])
+
+# 测试使用
+if __name__ == "__main__":
+    handleTxt(fileName='',filePath='E:\huaweicup\huaweicup2-RichTextDetc\赛题材料\环境信息.txt')
