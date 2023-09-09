@@ -2,13 +2,36 @@
 sensitive_word:
   # 用户
   - username
+  - name
   - user
   - root
-  # 密码
+  - admin
+
+  # 密码/密钥
   - password
   - pass
   - pwd
   - psw
-  # ip\端口
+  - authorization
+  - authentication
+  - auth
+  - key
+  - secure
+  - salt
+  - nonce
+  # ip\端口\地址
   - ip
   - port
+  - http
+  - path
+  - host
+  - ssh
+  # 服务器
+  - db
+  - database
+  - 服务器
+  - 研发
+  - node
+  - 节点
+  - vpn
+  - 网关
