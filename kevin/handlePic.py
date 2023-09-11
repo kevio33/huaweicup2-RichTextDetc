@@ -45,7 +45,7 @@ def handleJPGorPNG(fileName,filePath):
 def matchSensiti(origin_list,senti_list):
     extract = []
     # 遍历读出来的元素，然后匹配铭感词
-    # TODO 上下文匹配不是很号，只匹配到关键词
+    # TODO 上下文匹配不是很好，只匹配到关键词
     for item in origin_list:
         item = item.lower()
         for word in senti_list:

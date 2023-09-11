@@ -12,6 +12,7 @@ from tqdm import tqdm
 from kevin.handlePic import handleJPGorPNG
 from msn.handleExcel import handleExcel
 from msn.handleTxt import handleTxt
+from msn.handleWord import handleWord
 
 fileQue = Queue()# 队列保存所有子文件和子目录信息
 
@@ -79,15 +80,18 @@ def handleQue():
             extend = extend[-1]
 
         if extend == 'jpg' or extend == 'png': #这里重复逻辑判断
-            handleJPGorPNG(i.fileName,i.filePath)
+            handleJPGorPNG(i.fileName, i.filePath)
         elif extend == 'xlsx': #这里重复逻辑判断
-            handleExcel(i.fileName,i.filePath)
+            handleExcel(i.fileName, i.filePath)
         elif extend == 'txt':
-            handleTxt(i.fileName,i.filePath)
+            handleTxt(i.fileName, i.filePath)
+        elif extend == 'doc':
+            handleWord(i.filePath)
 
         pbar.update(1)#更新进度条
-    
+
     pbar.close()
+
 
         
 if __name__ == "__main__":
