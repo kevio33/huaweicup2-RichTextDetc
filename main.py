@@ -57,7 +57,6 @@ def listUnzipFile(filePath):
         if it.is_dir():
             listUnzipFile(filePath=it.path)
         else:
-
             file = FileInfo(fileName=it.name,filePath=os.path.abspath(it.path))
             fileQue.put(file) # 如果是文件，则将文件放入队列
 
@@ -88,6 +87,10 @@ def handleQue():
         pbar.update(1)#更新进度条
     
     pbar.close()
+
+    # while not fileQue.empty():
+    #     i = fileQue.get()
+    #     print(i.fileName)
 
         
 if __name__ == "__main__":

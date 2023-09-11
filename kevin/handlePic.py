@@ -20,25 +20,32 @@ current_directory = os.path.dirname(os.path.abspath(__file__))
     用到easyOCR
     路径包含中文会乱码，因此将路径转换为numpy格式
 '''
-def handleJPGorPNG(fileName,filePath):
+
+'''
+    ocr，返回读取文字内容
+'''
+def OCR(filePath):
     cv_img= cv2.imdecode(np.fromfile(filePath,dtype=np.uint8),-1)#先转换格式为np，否则中文乱码读不到文件
     reader = easyocr.Reader(['ch_sim','en'],gpu=False) # this needs to run only once to load the model into memory
     result = reader.readtext(cv_img,detail=0) 
-    # print(result)
+    return result
+
+
+def handleJPGorPNG(fileName,filePath):
     sentiWord = matchSensitive.readYaml()# 返回铭感词字典
     sentiWord = sentiWord['sensitive_word']
-    
+    result = OCR(filePath=filePath)
     extract = matchSensiti(origin_list=result,senti_list=sentiWord)
     dic = {}
-    dic[fileName+'源']=sentiWord + '\n'
+    dic[fileName+'源']=str(sentiWord)
     dic[fileName+'提取'] = extract 
-    savePath = os.path.join(current_directory,fileName,".txt")
+    savePath = os.path.join(current_directory,fileName+".txt")
     file = open(savePath,"w",encoding='utf-8')
     file.write(str(dic))
     file.close()
 
 '''
-    匹配铭感信息算法
+    匹配敏感信息算法
     origin_str:要匹配的目标list
     senti_list:铭感词的目标list
 '''
@@ -56,8 +63,8 @@ def matchSensiti(origin_list,senti_list):
     return extract          
     
 if __name__ == '__main__':
-    cv_img= cv2.imdecode(np.fromfile('E:\huaweicup\huaweicup2-RichTextDetc\赛题材料\carbon.jpg',dtype=np.uint8),-1)#先转换格式为np，否则中文乱码读不到文件
-    handleJPGorPNG('carbon.jpg','E:\huaweicup\huaweicup2-RichTextDetc\赛题材料\carbon.jpg')
+    cv_img= cv2.imdecode(np.fromfile('E:\huaweicup\huaweicup2-RichTextDetc\kevin\图片1.png',dtype=np.uint8),-1)#先转换格式为np，否则中文乱码读不到文件
+    handleJPGorPNG('图片1.png','E:\huaweicup\huaweicup2-RichTextDetc\kevin\图片1.png')
     # sentiWord = matchSensitive.readYaml()# 返回铭感词字典
     # sentiWord = sentiWord['sensitive_word']
     # print(sentiWord)
