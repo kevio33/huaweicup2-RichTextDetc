@@ -30,6 +30,7 @@ sensitive_word:
   - db
   - database
   - 服务器
+  - 服务器地址
   - 研发
   - node
   - 节点
