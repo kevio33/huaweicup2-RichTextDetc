@@ -20,10 +20,10 @@ def handlePpt(fileName,filePath,isPPT=False):
     pptx = Presentation(filePath)# 文件对象
     for slide in pptx.slides: # 每个幻灯片
         for shape in slide.shapes: #幻灯片的所有形状
-            # if shape.has_text_frame: #如果有文本框
-            #     text_frame = shape.text_frame
-            # if shape.
-            print(shape)
+            if shape.has_text_frame: #如果有文本框
+                text_frame = shape.text_frame
+            
+            # print(shape )
     
 
 

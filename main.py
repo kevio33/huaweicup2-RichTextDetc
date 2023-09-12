@@ -13,6 +13,7 @@ from kevin.handlePic import handleJPGorPNG
 from kevin.handlePPT import handlePpt
 from msn.handleExcel import handleExcel
 from msn.handleTxt import handleTxt
+from msn.handleWord import handleWord
 
 fileQue = Queue()# 队列保存所有子文件和子目录信息
 
@@ -58,6 +59,7 @@ def listUnzipFile(filePath):
         if it.is_dir():
             listUnzipFile(filePath=it.path)
         else:
+
             file = FileInfo(fileName=it.name,filePath=os.path.abspath(it.path))
             fileQue.put(file) # 如果是文件，则将文件放入队列
 
@@ -78,6 +80,7 @@ def handleQue():
             # 文件后缀
             suffix = extend[-1]
 
+
         if suffix == 'jpg' or extend == 'png': #这里重复逻辑判断
             handleJPGorPNG(i.fileName,i.filePath)
         elif suffix == 'xlsx': #这里重复逻辑判断
@@ -89,13 +92,11 @@ def handleQue():
         elif suffix == 'pptx':
             handlePpt(i.fileName,i.filePath)
 
+
         pbar.update(1)#更新进度条
-    
+
     pbar.close()
 
-    # while not fileQue.empty():
-    #     i = fileQue.get()
-    #     print(i.fileName)
 
         
 if __name__ == "__main__":

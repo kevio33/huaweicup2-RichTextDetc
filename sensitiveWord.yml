@@ -6,6 +6,7 @@ sensitive_word:
   - user
   - root
   - admin
+
   # 密码/密钥
   - password
   - pass
