@@ -10,6 +10,7 @@ from queue import Queue
 from tqdm import tqdm
 
 from kevin.handlePic import handleJPGorPNG
+from kevin.handlePPT import handlePpt
 from msn.handleExcel import handleExcel
 from msn.handleTxt import handleTxt
 
@@ -75,14 +76,18 @@ def handleQue():
 
         if len(extend) >= 2:
             # 文件后缀
-            extend = extend[-1]
+            suffix = extend[-1]
 
-        if extend == 'jpg' or extend == 'png': #这里重复逻辑判断
+        if suffix == 'jpg' or extend == 'png': #这里重复逻辑判断
             handleJPGorPNG(i.fileName,i.filePath)
-        elif extend == 'xlsx': #这里重复逻辑判断
+        elif suffix == 'xlsx': #这里重复逻辑判断
             handleExcel(i.fileName,i.filePath)
-        elif extend == 'txt':
+        elif suffix == 'txt':
             handleTxt(i.fileName,i.filePath)
+        elif suffix == 'ppt':
+            handlePpt(fileName=extend[0],filePath=i.filePath,isPPT=True)
+        elif suffix == 'pptx':
+            handlePpt(i.fileName,i.filePath)
 
         pbar.update(1)#更新进度条
     
@@ -94,7 +99,7 @@ def handleQue():
 
         
 if __name__ == "__main__":
-    unzipFile('题目1：富文本敏感信息泄露检测.rar') #解压缩文件
+    unzipFile('题目1：富文本敏感信息泄露检测.rar','.') #解压缩文件
     listUnzipFile('.\赛题材料')#分析代码
     handleQue() # 处理队列里面记录的文件
 

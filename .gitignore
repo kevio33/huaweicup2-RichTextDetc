@@ -6,3 +6,11 @@ __pycache__/
 .vscode/
 .idea/
 *.txt
+*.ppt
+*.pptx
+*.word
+*.png
+*.jpg
+*.xlsx
+*.doc
+*.docx
