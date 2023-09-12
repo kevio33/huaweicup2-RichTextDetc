@@ -15,11 +15,20 @@ minganword_regex = r"(.*)(研发|邮箱)(.*)"  #研发、邮箱
 # 合并所有正则
 all_regex = re.compile(f"({ip_regex}|{email_regex}|{username_regex}|{password_regex}|{minganword_regex})")
 
+# 路径
+current_directory = os.path.dirname(os.path.abspath(__file__))
+output_path = os.path.join(current_directory, "outputTxt.txt")
 
-'''
-    处理txt文件
-'''
-def handleTxt(fileName,filePath):
+
+def handleTxt(filePath):
+    result = handle_txt(filePath)
+    save_to_txt(result, output_path)  # 保存结果
+
+
+    '''
+        处理txt文件
+    '''
+def handle_txt(filePath):   #处理txt文件通用方法
 
     # 原代码
     # with open(filePath, 'r',encoding='utf-8') as file:
@@ -29,9 +38,6 @@ def handleTxt(fileName,filePath):
     #     current_directory = os.path.dirname(os.path.abspath(__file__))
     #     output_path = os.path.join(current_directory, "outputTxt.txt")
     #     save_to_txt(sensitive_data, output_path)
-    
-    current_directory = os.path.dirname(os.path.abspath(__file__))
-    output_path = os.path.join(current_directory, "outputTxt.txt")
     isR = True # 是否是换行符号
     readRes =[] # 因为读取的结果是一个列表，所有定义列表保存所有读取结果
     for line in open(filePath, 'r',encoding='utf-8'): 
@@ -44,7 +50,7 @@ def handleTxt(fileName,filePath):
             if isR is True:
                 readRes.extend(line)
                 isR = False
-    save_to_txt(readRes, output_path)# 保存结果
+    return readRes
 
 '''
     写入提取信息
@@ -55,7 +61,7 @@ def save_to_txt(data, output_path):
     #     for item in data:
     #         file.write(item[0] + '\n')
 
-    with open(output_path, 'w',encoding='utf-8') as file:
+    with open(output_path, 'w', encoding='utf-8') as file:
         for item in data:
             # 如果本身换行符不需要再加换行符
             if item != '\n':
@@ -63,6 +69,6 @@ def save_to_txt(data, output_path):
             else:
                 file.write(item[0])
 
-# 测试使用
-if __name__ == "__main__":
-    handleTxt(fileName='',filePath='E:\huaweicup\huaweicup2-RichTextDetc\赛题材料\环境信息.txt')
+# # 测试使用
+# if __name__ == "__main__":
+#     handleTxt(filePath='D:\huaweicup\huaweicup2-RichTextDetc\赛题材料\环境信息.txt')

@@ -35,6 +35,7 @@ def handleWord(fileName, filePath):
     word.Visible = False
     doc = word.Documents.Open(filePath)
     text = doc.Content.Text
+
     #识别word中的图片
     # for shape in doc.InlineShapes:
     #     # Check if shape has image data
@@ -73,7 +74,7 @@ def save_to_txt(data, output_path):
 
 # if __name__ == "__main__":
 #     # 示例
-#     word_path = "D:\huaweicup\huaweicup2-RichTextDetc\赛题材料\office\麒麟SSL+VPN+Windows客户端使用手册.doc"
+#     word_path = "D:\huaweicup\huaweicup2-RichTextDetc\赛题材料\wps\Android手机VPN安装指南.wps"
 #
 #     # print(handleWord(word_path))
 #     text = handleWord(word_path)

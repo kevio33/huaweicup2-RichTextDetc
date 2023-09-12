@@ -86,13 +86,13 @@ def handleQue():
         elif suffix == 'xlsx': #这里重复逻辑判断
             handleExcel(i.fileName,i.filePath)
         elif suffix == 'txt':
-            handleTxt(i.fileName,i.filePath)
-        elif suffix == 'ppt':
-            handlePpt(fileName=extend[0],filePath=i.filePath,isPPT=True)
-        elif suffix == 'pptx':
-            handlePpt(i.fileName,i.filePath)
-        elif suffix == 'doc':
-            handleWord(i.fileName, i.filePath)
+            handleTxt(i.filePath)
+        # elif suffix == 'ppt':
+        #     handlePpt(fileName=extend[0],filePath=i.filePath,isPPT=True)
+        # elif suffix == 'pptx':
+        #     handlePpt(i.fileName,i.filePath)
+        # elif suffix == 'doc':
+        #     handleWord(i.fileName, i.filePath)
 
 
         pbar.update(1)#更新进度条
