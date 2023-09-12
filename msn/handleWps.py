@@ -1,3 +1,5 @@
+from docx import Document
+import re
 import os
 import re
 import win32com.client as win32
@@ -27,40 +29,26 @@ all_regex = re.compile(
 
 # 路径
 current_directory = os.path.dirname(os.path.abspath(__file__))
-output_path = os.path.join(current_directory, "outputWord.txt")
+output_path = os.path.join(current_directory, "outputWps.txt")
 
 
-def handleWord(fileName, filePath):
-    word = win32.Dispatch("Word.Application")
-    word.Visible = False
-    doc = word.Documents.Open(filePath)
-    text = doc.Content.Text
+def handleWps(filePath):
+    # Load the document
+    doc = Document(filePath)  # Try loading .wps, may or may not work
 
-    #识别word中的图片
-    # for shape in doc.InlineShapes:
-    #     # Check if shape has image data
-    #     if shape.Type == 3:  # Type 3 indicates the shape has an image.
-    #         image_path = os.path.join(current_directory, f'image_{shape.Range.Start}.png')
-    #         shape.Range.Copy()  # Copy image data
-    #         # Use clipboard to get the image data and save to file
-    #         from PIL import ImageGrab
-    #         img = ImageGrab.grabclipboard()  # Gets image from clipboard
-    #         if img:
-    #             img.save(image_path, 'PNG')
-    #             text += str(OCR(image_path))
-                # reader = easyocr.Reader(['en', 'ch_sim'])  # specify language - 'en' for English
-                # result = reader.readtext(image_path)
-                # text = ' '.join([item[1] for item in result])
+    # Extract text
+    full_text = []
+    for para in doc.paragraphs:
+        full_text.append(para.text)
 
-    doc.Close()
-    word.Quit()
+    text = '\n'.join(full_text)
+
     sensitive_data = re.findall(all_regex, text)
-    if isinstance(sensitive_data, list):   # 可能得到元组列表，先转换成字符串列表，不然file.write报错
-        sensitive_data = ' '.join([' '.join(t) for t in sensitive_data])   # 转换成一整个字符串
+    if isinstance(sensitive_data, list):  # 可能得到元组列表，先转换成字符串列表，不然file.write报错
+        sensitive_data = ' '.join([' '.join(t) for t in sensitive_data])  # 转换成一整个字符串
         sensitive_data = sensitive_data.split()  # 按空格切割data，转变成列表，方便保存
 
     save_to_txt(sensitive_data, output_path)
-
 
 def save_to_txt(data, output_path):
     with open(output_path, 'r+') as file:   # 文件可读可写模式打开
@@ -74,9 +62,14 @@ def save_to_txt(data, output_path):
 
 # if __name__ == "__main__":
 #     # 示例
-#     word_path = "D:\huaweicup\huaweicup2-RichTextDetc\赛题材料\wps\Android手机VPN安装指南.wps"
+#     word_path = "D:\huaweicup\huaweicup2-RichTextDetc\赛题材料\office\麒麟SSL+VPN+Windows客户端使用手册.doc"
 #
 #     # print(handleWord(word_path))
 #     text = handleWord(word_path)
 #     print(text)
 #     save_to_txt(text, output_path)
+
+
+if __name__== "__main__":
+    filePath = "D:\huaweicup\huaweicup2-RichTextDetc\赛题材料\wps\Android手机VPN安装指南.wps"
+    handleWps(filePath)
