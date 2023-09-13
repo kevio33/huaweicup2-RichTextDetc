@@ -8,6 +8,7 @@ import os
 import rarfile
 from queue import Queue
 from tqdm import tqdm
+from utils.fileInfo import FileInfo
 
 from kevin.handlePic import handleJPGorPNG
 from kevin.handlePPT import handlePpt
@@ -15,24 +16,14 @@ from msn.handleExcel import handleExcel
 from msn.handleTxt import handleTxt
 from msn.handleWord import handleWord
 
+import time
+
+
 fileQue = Queue()# 队列保存所有子文件和子目录信息
 
 # f = open('fileData.yml', 'r', encoding='utf-8')# 读yml文件
 # cfg = f.read()
 # dyml = yaml.load(cfg,Loader=yaml.FullLoader)  # 用load方法转字典
-
-
-# 文件类，保存文件路径和父目录名字
-class FileInfo:
-    def __init__(self,fileName,filePath):
-        self.fileName = fileName # 该文件的路径
-        self.filePath = filePath # 父目录的名字
-    
-    def printPath(self):
-        print(self.filePath)
-
-    def __getattr__(self,attr): 
-        return attr
 
 
 # 解压缩文件
@@ -81,14 +72,15 @@ def handleQue():
             suffix = extend[-1]
 
 
-        if suffix == 'jpg' or extend == 'png': #这里重复逻辑判断
-            handleJPGorPNG(i.fileName,i.filePath)
-        elif suffix == 'xlsx': #这里重复逻辑判断
-            handleExcel(i.fileName,i.filePath)
-        elif suffix == 'txt':
-            handleTxt(i.filePath)
+        # if suffix == 'jpg' or extend == 'png': #这里重复逻辑判断
+        #     handleJPGorPNG(i.fileName,i.filePath)
+        # elif suffix == 'xlsx': #这里重复逻辑判断
+        #     handleExcel(i.fileName,i.filePath)
+        # elif suffix == 'txt':
+        #     handleTxt(i.filePath)
         # elif suffix == 'ppt':
         #     handlePpt(fileName=extend[0],filePath=i.filePath,isPPT=True)
+            
         # elif suffix == 'pptx':
         #     handlePpt(i.fileName,i.filePath)
         # elif suffix == 'doc':
@@ -102,10 +94,22 @@ def handleQue():
 
         
 if __name__ == "__main__":
+
+    start_time = time.time()
+
     unzipFile('题目1：富文本敏感信息泄露检测.rar','.') #解压缩文件
     listUnzipFile('.\赛题材料')#分析代码
     handleQue() # 处理队列里面记录的文件
 
+    end_time = time.time()
+    time_local_start = time.localtime(start_time)
+    time_local_end = time.localtime(end_time)
+
+    dt_start = time.strftime("%Y-%m-%d %H:%M:%S", time_local_start)
+    dt_end = time.strftime("%Y-%m-%d %H:%M:%S", time_local_end)
+    
+    print("开始时间:",dt_start)
+    print("结束时间:",dt_end)
 
 
 

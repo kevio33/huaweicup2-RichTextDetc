@@ -24,6 +24,7 @@ current_directory = os.path.dirname(os.path.abspath(__file__))
 '''
     ocr，返回读取文字内容
 '''
+# ocr速度有点慢，考虑开线程
 def OCR(filePath):
     cv_img= cv2.imdecode(np.fromfile(filePath,dtype=np.uint8),-1)#先转换格式为np，否则中文乱码读不到文件
     reader = easyocr.Reader(['ch_sim','en'],gpu=False) # this needs to run only once to load the model into memory

@@ -2,7 +2,11 @@ from pptx import Presentation
 import aspose.slides as slides
 import aspose.pydrawing as drawing
 import os
-from main import FileInfo
+
+# import sys
+# sys.path.append(r'..')
+from utils.fileInfo import FileInfo
+from kevin.handlePic import OCR
 
 '''
     读取ppt内容
@@ -14,13 +18,13 @@ def handlePpt(fileName,filePath,isPPT=False):
     if isPPT == True:
         # 转换为pptx格式
         with slides.Presentation(filePath) as presentation:
-            filePath = filePath[:-(len(fileName)+3)]
-            filePath = "{0}{1}.pptx".format(filePath,fileName)
+            filePath = filePath[:-4]
+            # print("\n"+filePath)
+            filePath = "{0}.pptx".format(filePath)
             presentation.save(filePath, slides.export.SaveFormat.PPTX)
 
     pptx = Presentation(filePath)# 文件对象
     textRest = []# 用来存放每一页文本内容
-    imgList = []
     for slide in pptx.slides: # 每个幻灯片
         for shape in slide.shapes: #幻灯片的所有形状
             if shape.has_text_frame: #如果有文本框
@@ -37,30 +41,31 @@ def handlePpt(fileName,filePath,isPPT=False):
                     imtype = imagetype[typekey:]
                     # 创建image文件夹保存抽出图片
                     rootPath = os.path.abspath(__file__)
-                    rootPath = rootPath[:-5] #父目录
+                    rootPath = rootPath[:-12] #父目录
                     path = rootPath+"{}_image/".format(fileName)
                     if not os.path.exists(path):
                         os.makedirs(path)
                     # 图片生成
                     image_file = path + shape.name + "." + imtype
-                    name = shape.name
+                    # name = shape.name
                     file_str=open(image_file,'wb')
                     file_str.write(imdata)
                     file_str.close()
-                    imgList.append(FileInfo(fileName=name,filePath=image_file))
+                    # imgList.append(FileInfo(fileName=name,filePath=image_file))
+                    res = OCR(image_file) # 读取图片内容
+                    textRest.extend(res)
                 except:
                     pass
-    out_file = open('{}_output.txt'.format(fileName))
+    out_file = open('kevin/{}.txt'.format(fileName),mode='w',encoding='utf-8') #保存路径要注意，如果是main调用进来需要改变路径
     out_file.write(str(textRest))
     out_file.close()
-    return imgList
-
-
-
-
-
-
-
+    
 
 if __name__ == '__main__':
-    handlePpt('学生信息管理系统使用介绍',r'E:\huaweicup\huaweicup2-RichTextDetc\赛题材料\office\220180327081403010127.ppt')
+    import sys
+    sys.path.append(r'..')
+    from utils.fileInfo import FileInfo
+
+    lis = handlePpt('20180327081403010127.ppt',r'E:\huaweicup\huaweicup2-RichTextDetc\赛题材料\office\20180327081403010127.ppt',isPPT=True)
+    print(str(lis))
+    

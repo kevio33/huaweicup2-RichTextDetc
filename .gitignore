@@ -11,7 +11,9 @@ __pycache__/
 *.word
 *.png
 *.jpg
+*.jpeg
 *.xlsx
 *.doc
 *.docx
+
 
