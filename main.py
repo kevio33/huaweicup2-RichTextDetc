@@ -72,19 +72,19 @@ def handleQue():
             suffix = extend[-1]
 
 
-        # if suffix == 'jpg' or extend == 'png': #这里重复逻辑判断
-        #     handleJPGorPNG(i.fileName,i.filePath)
-        # elif suffix == 'xlsx': #这里重复逻辑判断
-        #     handleExcel(i.fileName,i.filePath)
-        # elif suffix == 'txt':
-        #     handleTxt(i.filePath)
-        # elif suffix == 'ppt':
-        #     handlePpt(fileName=extend[0],filePath=i.filePath,isPPT=True)
+        if suffix == 'jpg' or extend == 'png': #这里重复逻辑判断
+            handleJPGorPNG(i.fileName,i.filePath)
+        elif suffix == 'xlsx': #这里重复逻辑判断
+            handleExcel(i.fileName,i.filePath)
+        elif suffix == 'txt':
+            handleTxt(i.filePath)
+        elif suffix == 'ppt':
+            handlePpt(fileName=extend[0],filePath=i.filePath,isPPT=True)
             
-        # elif suffix == 'pptx':
-        #     handlePpt(i.fileName,i.filePath)
-        # elif suffix == 'doc':
-        #     handleWord(i.fileName, i.filePath)
+        elif suffix == 'pptx':
+            handlePpt(i.fileName,i.filePath)
+        elif suffix == 'doc':
+            handleWord(i.fileName, i.filePath)
 
 
         pbar.update(1)#更新进度条

@@ -15,5 +15,6 @@ __pycache__/
 *.xlsx
 *.doc
 *.docx
+!kevin/note.assets/
 
 
