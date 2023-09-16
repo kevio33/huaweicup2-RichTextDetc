@@ -19,6 +19,8 @@ sensitive_word:
   - secure
   - salt
   - nonce
+  - 密钥
+  - 密码
   # ip\端口\地址
   - ip
   - port
@@ -36,3 +38,6 @@ sensitive_word:
   - 节点
   - vpn
   - 网关
+  - 虚拟专用网络
+  - 专用网络
+
