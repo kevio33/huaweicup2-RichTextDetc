@@ -28,6 +28,7 @@ sensitive_word:
   - path
   - host
   - ssh
+  - proxy
   # 服务器
   - db
   - database
@@ -40,4 +41,3 @@ sensitive_word:
   - 网关
   - 虚拟专用网络
   - 专用网络
-
