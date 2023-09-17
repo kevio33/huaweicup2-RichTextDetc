@@ -30,7 +30,7 @@ current_directory = os.path.dirname(os.path.abspath(__file__))
 output_path = os.path.join(current_directory, "outputWord.txt")
 
 
-def handleWord(fileName, filePath):
+def handleWord(filePath):
     word = win32.Dispatch("Word.Application")
     word.Visible = False
     doc = word.Documents.Open(filePath)
@@ -74,7 +74,7 @@ def save_to_txt(data, output_path):
 
 # if __name__ == "__main__":
 #     # 示例
-#     word_path = "D:\huaweicup\huaweicup2-RichTextDetc\赛题材料\wps\Android手机VPN安装指南.wps"
+#     word_path = "D:\huaweicup\huaweicup2-RichTextDetc\赛题材料\office\Android手机VPN安装指南.doc"
 #
 #     # print(handleWord(word_path))
 #     text = handleWord(word_path)

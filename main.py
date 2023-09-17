@@ -91,8 +91,8 @@ def handleQue():
         #     handlePpt(fileName=extend[0],filePath=i.filePath,isPPT=True)
         # elif suffix == 'pptx':
         #     handlePpt(i.fileName,i.filePath)
-        # elif suffix == 'doc':
-        #     handleWord(i.fileName, i.filePath)
+        elif suffix == 'doc':
+            handleWord(i.filePath)
 
 
         pbar.update(1)#更新进度条
