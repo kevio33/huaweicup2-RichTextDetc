@@ -21,14 +21,17 @@ sensitive_word:
   - nonce
   - 密钥
   - 密码
-  # ip\端口\地址
+  # ip\地址
+  #   - (ip|服务器地址|服务器|ip地址|IP|IP地址)?[:]?\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}:
   - ip
-  - port
   - http
   - path
   - host
   - ssh
   - proxy
+  # 端口
+  #   - \d{0,5}(port|端口号|端口)[:]?\d{1,5}:
+  - port
   # 服务器
   - db
   - database
