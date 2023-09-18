@@ -1,5 +1,6 @@
 import os
-import re
+import sys
+sys.path.append(r'..')
 import regSensitive
 
 
@@ -12,8 +13,9 @@ def read_file_line_by_line(file_path):
     try:
         with open(file_path, 'r', encoding='utf-8') as file:
             for line in file:
+                print(line)
                 line.strip()  # 返回每行内容，并去掉末尾的换行符
-                sensitive = regSensitive.mathSensitive(line)
+                sensitive = regSensitive.regexSensitive(line)
     except FileNotFoundError:
         print(f"文件 '{file_path}' 不存在.")
     except Exception as e:

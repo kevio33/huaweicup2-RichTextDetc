@@ -33,6 +33,7 @@ def regexSensitive(textLis=[]):
     for text in textLis:
         text = text.lower()
         resLis = all_regex.findall(text)#返回是列表，里面可能有多个匹配tuple
+        # print(resLis)
         for tup in resLis:
             # for item in tup:
             #     if item != '':
