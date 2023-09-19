@@ -69,28 +69,12 @@ def handleQue():
         suffix = ''
         if len(extend) >= 2:
 
-            # 文件后缀
-            suffix = extend[-1]
-
-        if suffix == 'doc':
-            handleWord(i.filePath)
-        elif suffix == 'jpg' or extend == 'png': #这里重复逻辑判断
-            handleJPGorPNG(i.fileName,i.filePath)
-        elif suffix == 'xlsx': #这里重复逻辑判断
-            handleExcel(i.fileName,i.filePath)
-        elif suffix == 'txt':
-            handleTxt(i.filePath)
-        elif suffix == 'ppt':
-            handlePpt(fileName=extend[0],filePath=i.filePath,isPPT=True)
-        elif suffix == 'pptx':
-            handlePpt(i.fileName,i.filePath)
-
             # 有文件后缀
             suffix = extend[-1]#文件后缀
 
 
-            # if suffix == 'jpg' or extend == 'png': #这里重复逻辑判断
-            #     handleJPGorPNG(i.fileName,i.filePath)
+            if suffix == 'jpg' or suffix == 'png': #这里重复逻辑判断
+                handleJPGorPNG(i.fileName,i.filePath)
             # elif suffix == 'xlsx': #这里重复逻辑判断
             #     handleExcel(i.fileName,i.filePath)
             # elif suffix == 'txt':
@@ -107,8 +91,7 @@ def handleQue():
             #     handlePpt(i.fileName,i.filePath)
             # elif suffix == 'eml':
             #     handleEml(i.fileName,i.filePath)
-            if suffix == 'eml':
-                handleEml(i.fileName,i.filePath)
+            
         else:
             pass#没有后缀名的文件
 

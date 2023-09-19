@@ -14,7 +14,10 @@ password_regex = r"(password|pwd|密码|psw|authorization|authentication|key|sec
 
 email_regex = r"(邮箱|email)?[:：]?[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$"
 
-http_regex = r"^https?:\/\/([a-z0-9][-a-z0-9]{0,62}(\.[a-z0-9][-a-z0-9]{0,62})+)(:\d+)?(\/\S*)?$"
+http_regex = r"^(https|http|ssh|rdp):\/\/([a-z0-9][-a-z0-9]{0,62}(\.[a-z0-9][-a-z0-9]{0,62})+)(:\d+)?(\/\S*)?$"
+# ssh_regex - r"^https?:\/\/([a-z0-9][-a-z0-9]{0,62}(\.[a-z0-9][-a-z0-9]{0,62})+)(:\d+)?(\/\S*)?$"
+
+
 all_regex = re.compile(f"({ip_regex}|{port2_regex}|{username_regex}|{password_regex}|{email_regex}|{http_regex})")
 
 '''
@@ -51,7 +54,8 @@ if  __name__ == '__main__':
     texLis = [
              "我们今天吃什么usernamea:kevin,sdhsjkdhsajdhs",
               "我的邮箱是:kevinang@qq.com.cn",
-              "学校的ip地址是:192.168.173.10"
+              "学校的ip地址是:192.168.173.10",
+              "rdp://10.10.1.101"
               ]
     res = regexSensitive(texLis)
     for i in res:

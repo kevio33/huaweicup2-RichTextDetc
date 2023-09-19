@@ -2,7 +2,11 @@ import os
 import re
 import win32com.client as win32
 from docx import Document
-from kevin.handlePic import OCR
+
+
+
+
+# from kevin.handlePic import OCR
 
 # 定义识别敏感词的正则表达式
 ip_regex = r"(服务器地址)?\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}"  # 匹配1-3个数字
@@ -31,17 +35,19 @@ output_path = os.path.join(current_directory, "outputWord.txt")
 # .doc转.docx
 def convert_doc_to_docx(doc_file, docx_file):
     # 创建一个新的.docx文件
-    docx_document = Document()
+    docx_document = Document(doc_file)
     # 读取.doc文件的内容
-    with open(doc_file, 'rb') as doc:
-        content = doc.read()
-        byte_data = bytes.fromhex(content)
-        content_utf_8 = byte_data.decode('utf-8')
-        # content_utf_8 = bytes(content, encoding = "utf-8").decode()
-    # 将.doc文件的内容写入.docx文件
-    docx_document.add_paragraph(str(content_utf_8))
+    # with open(doc_file, 'rb') as doc:
+    #     content = doc.read()
+    #     content =''.join(c for c in content.decode('utf-8', 'ignore') if c.isprintable())
+    #     # print(content)
+    #     # byte_data = bytes.fromhex(str(content))
+    #     # content_utf_8 = byte_data.decode('utf-8')
+    #     # content_utf_8 = bytes(content, encoding = "utf-8").decode()
+    # # 将.doc文件的内容写入.docx文件
+    # docx_document.add_paragraph(str(content))
     # 保存.docx文件
-    docx_document.save(docx_file)
+    docx_document.save("save.docx")
     # 将.doc文件转换为.docx文件
 
 
@@ -106,8 +112,10 @@ def save_to_txt(data, output_path):
 
 if __name__ == "__main__":
     # 示例
-    word_path = "D:\huaweicup\huaweicup2-RichTextDetc\赛题材料\office\Android手机VPN安装指南.doc"
+    # word_path = "D:\huaweicup\huaweicup2-RichTextDetc\赛题材料\office\Android手机VPN安装指南.doc"#msn
+    word_path = "E:\huaweicup\huaweicup2-RichTextDetc\赛题材料\office\Android手机VPN安装指南.doc"#kevin
 
     # print(handleWord(word_path))
-    text = handleWord(word_path)
+    # text = handleWord(word_path)
 
+    

@@ -8,11 +8,12 @@ import cv2
 import numpy as np
 
 
+
 import sys
 sys.path.append(r'..')
 '''python import模块时， 是在sys.path里按顺序
 '''
-import utils.matchSensitive as matchSensitive
+from regSensitive import regexSensitive
 
 current_directory = os.path.dirname(os.path.abspath(__file__))
 
@@ -29,20 +30,20 @@ def OCR(filePath):
     cv_img= cv2.imdecode(np.fromfile(filePath,dtype=np.uint8),-1)#先转换格式为np，否则中文乱码读不到文件
     reader = easyocr.Reader(['ch_sim','en'],gpu=False) # this needs to run only once to load the model into memory
     result = reader.readtext(cv_img,detail=0)
-    result = ",".join(result)
+    result = " ".join(result)
     res = []
     res.append(result)
     return res
 
 
 def handleJPGorPNG(fileName,filePath):
-    sentiWord = matchSensitive.readYaml()# 返回铭感词字典
-    sentiWord = sentiWord['sensitive_word']
+
     result = OCR(filePath=filePath)
-    extract = matchSensiti(origin_list=result,senti_list=sentiWord)
+    extract = regexSensitive(result)
+    # print(fileName,":",extract)
     dic = {}
-    dic[fileName+'源']=str(sentiWord)
-    dic[fileName+'提取'] = extract
+    # dic[fileName+'源']=str(sentiWord)
+    dic[fileName] = extract
     savePath = os.path.join(current_directory,fileName+".txt")
     file = open(savePath,"w",encoding='utf-8')
     file.write(str(dic))
@@ -67,8 +68,9 @@ def matchSensiti(origin_list,senti_list):
     return extract
 
 if __name__ == '__main__':
-    cv_img= cv2.imdecode(np.fromfile('E:\huaweicup\huaweicup2-RichTextDetc\kevin\图片1.png',dtype=np.uint8),-1)#先转换格式为np，否则中文乱码读不到文件
-    handleJPGorPNG('图片1.png','E:\huaweicup\huaweicup2-RichTextDetc\kevin\图片1.png')
+    pass
+    # cv_img= cv2.imdecode(np.fromfile('E:\huaweicup\huaweicup2-RichTextDetc\kevin\图片1.png',dtype=np.uint8),-1)#先转换格式为np，否则中文乱码读不到文件
+    # handleJPGorPNG('图片1.png','E:\huaweicup\huaweicup2-RichTextDetc\kevin\图片1.png')
     # sentiWord = matchSensitive.readYaml()# 返回铭感词字典
     # sentiWord = sentiWord['sensitive_word']
     # print(sentiWord)
@@ -77,3 +79,15 @@ if __name__ == '__main__':
     # from PIL import Image
     # text = pytesseract.image_to_string(Image.open('E:\huaweicup\huaweicup2-RichTextDetc\赛题材料\HCC维护信息.png'),lang='ch_sim')
     # print(text)
+
+    # import doc2text
+
+    # doc = doc2text.Document()
+    # doc = doc2text.Document(lang='eng')
+    # doc.read('E:\huaweicup\huaweicup2-RichTextDetc\赛题材料\carbon.jpg')
+    # doc.process()
+    # doc.extract_text()
+    # text = doc.get_text()
+    # print(text)
+
+    
