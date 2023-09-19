@@ -7,13 +7,12 @@ import os
 import cv2
 import numpy as np
 
-from regSensitive import regexSensitive
+
 import sys
 sys.path.append(r'..')
 '''python import模块时， 是在sys.path里按顺序
 '''
 import utils.matchSensitive as matchSensitive
-
 
 current_directory = os.path.dirname(os.path.abspath(__file__))
 
@@ -37,8 +36,7 @@ def handleJPGorPNG(fileName,filePath):
     sentiWord = matchSensitive.readYaml()# 返回铭感词字典
     sentiWord = sentiWord['sensitive_word']
     result = OCR(filePath=filePath)
-    result = "".join(result)
-    extract = regexSensitive(textLis=result)
+    extract = matchSensiti(origin_list=result,senti_list=sentiWord)
     dic = {}
     dic[fileName+'源']=str(sentiWord)
     dic[fileName+'提取'] = extract
@@ -52,18 +50,18 @@ def handleJPGorPNG(fileName,filePath):
     origin_str:要匹配的目标list
     senti_list:铭感词的目标list
 '''
-# def matchSensiti(origin_list,senti_list):
-#     extract = []
-#     # 遍历读出来的元素，然后匹配铭感词
-#     # TODO 上下文匹配不是很好，只匹配到关键词
-#     for item in origin_list:
-#         item = item.lower()
-#         for word in senti_list:
-#             if item.find(word) >= 0:
-#                 # 匹配铭感词
-#                 extract.append(item)
-#                 break
-#     return extract
+def matchSensiti(origin_list,senti_list):
+    extract = []
+    # 遍历读出来的元素，然后匹配铭感词
+    # TODO 上下文匹配不是很好，只匹配到关键词
+    for item in origin_list:
+        item = item.lower()
+        for word in senti_list:
+            if item.find(word) >= 0:
+                # 匹配铭感词
+                extract.append(item)
+                break
+    return extract
 
 if __name__ == '__main__':
     cv_img= cv2.imdecode(np.fromfile('E:\huaweicup\huaweicup2-RichTextDetc\kevin\图片1.png',dtype=np.uint8),-1)#先转换格式为np，否则中文乱码读不到文件

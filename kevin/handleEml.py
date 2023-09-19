@@ -3,8 +3,6 @@
 '''
 from flanker import mime
 from flanker.addresslib import address
-import os
-
 
 
 #读邮件的内容
@@ -47,9 +45,7 @@ def handleEml(fileName,filePath):
         # if part.is_attachment():
             # filename = part.detected_file_name 
             # print(f'Found attachment: {filename}')
-        if not part.content_type.is_multipart():
-            if os.path.exists('emlattach'):
-                os.makedirs()     
+        if not part.content_type.is_multipart():    
             name = part.detected_file_name
             name = name.split('"')
             file = open(name[0],'wb')
@@ -65,7 +61,5 @@ def handleEml(fileName,filePath):
 def handleAttach():
     pass
 
-
 if __name__ == '__main__':
-
     handleEml('',r'E:\huaweicup\huaweicup2-RichTextDetc\赛题材料\xxx部门弱口令漏洞问题和整改 2023-05-25T17_27_32+08_00.eml')

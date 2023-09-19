@@ -1,7 +1,6 @@
-import os
 import re
 from openpyxl import load_workbook
-
+import os
 
 #读excel
 def readExcel(fileName,filePath):
@@ -20,7 +19,7 @@ def readExcel(fileName,filePath):
             index_num=columnname.index(x)+1  #excel索引和数组索引差1
             mapping[x]=sheet.cell(rownum,index_num).value
         mappinglist.append(mapping)
-    
+
     wb.close()
 
     return mappinglist
