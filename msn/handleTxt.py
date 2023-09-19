@@ -69,6 +69,6 @@ def save_to_txt(data, output_path):
             else:
                 file.write(item[0])
 
-# # 测试使用
-# if __name__ == "__main__":
-#     handleTxt(filePath='D:\huaweicup\huaweicup2-RichTextDetc\赛题材料\环境信息.txt')
+# 测试使用
+if __name__ == "__main__":
+    handleTxt(filePath='D:\huaweicup\huaweicup2-RichTextDetc\赛题材料\环境信息.txt')

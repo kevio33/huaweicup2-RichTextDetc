@@ -11,7 +11,11 @@ __pycache__/
 *.word
 *.png
 *.jpg
+*.jpeg
 *.xlsx
 *.doc
 *.docx
+!kevin/note.assets/*.png
+!README.assets/*.png
+
 
