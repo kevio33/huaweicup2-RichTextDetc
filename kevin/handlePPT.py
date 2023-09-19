@@ -7,13 +7,14 @@ import os
 # sys.path.append(r'..')
 from utils.fileInfo import FileInfo
 from kevin.handlePic import OCR
+from regSensitive import regexSensitive
 
 '''
     读取ppt内容
     只能读取pptx内容，而无法读取ppt
     因此要先转换格式
 '''
-def handlePpt(fileName,filePath,isPPT=False):
+def readPPt(fileName,filePath,isPPT=False):
     pptx = None
     if isPPT == True:
         # 转换为pptx格式
@@ -56,8 +57,14 @@ def handlePpt(fileName,filePath,isPPT=False):
                     textRest.extend(res)
                 except:
                     pass
+    return textRest
+
+def handlePpt(fileName,filePath,isPPT=False):
+    
+    textRes = readPPt(fileName,filePath,isPPT)
+    textRes = regexSensitive(textRes)
     out_file = open('kevin/{}.txt'.format(fileName),mode='w',encoding='utf-8') #保存路径要注意，如果是main调用进来需要改变路径
-    out_file.write(str(textRest))
+    out_file.write(str(textRes))
     out_file.close()
     
 
