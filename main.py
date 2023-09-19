@@ -8,6 +8,8 @@ import os
 import rarfile
 from queue import Queue
 from tqdm import tqdm
+
+from msn.handleWordx import handleWordx
 from utils.fileInfo import FileInfo
 
 from kevin.handlePic import handleJPGorPNG
@@ -74,6 +76,8 @@ def handleQue():
 
         if suffix == 'doc':
             handleWord(i.filePath)
+        elif suffix == 'docx':
+            handleWordx(i.filePath)
         elif suffix == 'jpg' or extend == 'png': #这里重复逻辑判断
             handleJPGorPNG(i.fileName,i.filePath)
         elif suffix == 'xlsx': #这里重复逻辑判断
