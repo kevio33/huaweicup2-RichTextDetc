@@ -63,7 +63,7 @@ def handleEml(fileName,filePath):
     处理附件
 '''
 def handleAttach():
-    
+    pass
 
 
 if __name__ == '__main__':
