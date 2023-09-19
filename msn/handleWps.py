@@ -3,7 +3,7 @@ import re
 import os
 import re
 import win32com.client as win32
-#import easyocr
+import wps
 
 
 from kevin.handlePic import OCR
@@ -33,6 +33,14 @@ output_path = os.path.join(current_directory, "outputWps.txt")
 
 
 def handleWps(filePath):
+
+
+    # 创建一个WPS应用对象
+    app = wps
+
+    # 打开指定的WPS文档
+    doc = app.open('path/to/document.docx')
+
     word = win32.Dispatch("Word.Application")
     word.Visible = False
     doc = word.Documents.Open(filePath)

@@ -8,6 +8,8 @@ import os
 import rarfile
 from queue import Queue
 from tqdm import tqdm
+
+from msn.handleWordx import handleWordx
 from utils.fileInfo import FileInfo
 
 from kevin.handlePic import handleJPGorPNG
@@ -94,8 +96,6 @@ def handleQue():
             
         else:
             pass#没有后缀名的文件
-
-
 
         pbar.update(1)#更新进度条
 

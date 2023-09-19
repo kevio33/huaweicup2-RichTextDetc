@@ -77,5 +77,4 @@ unrar==0.4
 urllib3==2.0.4
 wcwidth==0.2.6
 webencodings==0.5.1
-WebOb==1.8.7
 XlsxWriter==3.1.3

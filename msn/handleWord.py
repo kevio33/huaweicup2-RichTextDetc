@@ -37,29 +37,27 @@ def convert_doc_to_docx(doc_file, docx_file):
     # 创建一个新的.docx文件
     docx_document = Document(doc_file)
     # 读取.doc文件的内容
-    # with open(doc_file, 'rb') as doc:
-    #     content = doc.read()
-    #     content =''.join(c for c in content.decode('utf-8', 'ignore') if c.isprintable())
-    #     # print(content)
-    #     # byte_data = bytes.fromhex(str(content))
-    #     # content_utf_8 = byte_data.decode('utf-8')
-    #     # content_utf_8 = bytes(content, encoding = "utf-8").decode()
-    # # 将.doc文件的内容写入.docx文件
-    # docx_document.add_paragraph(str(content))
+    with open(doc_file, 'rb') as doc:
+        content = doc.read()
+        byte_data = bytes.fromhex(str(content))
+        content_utf_8 = byte_data.decode('utf-8')
+        # content_utf_8 = bytes(content, encoding = "utf-8").decode()
+    # 将.doc文件的内容写入.docx文件
+    docx_document.add_paragraph(str(content_utf_8))
     # 保存.docx文件
     docx_document.save("save.docx")
     # 将.doc文件转换为.docx文件
 
 
-def handleWord(doc_path):
+def handleWord(filePath):
     #转.docx类型
-    base_name = os.path.splitext(os.path.basename(doc_path))[0]  # 获取文件名称
-    docx_path = os.path.join(current_directory, base_name + '.docx')  # 创建.docx文件
-    convert_doc_to_docx(doc_path, docx_path)
-    # word = win32.Dispatch("Word.Application")
-    # word.Visible = False
-    # doc = word.Documents.Open(filePath)
-    # text = doc.Content.Text
+    # base_name = os.path.splitext(os.path.basename(doc_path))[0]  # 获取文件名称
+    # docx_path = os.path.join(current_directory, base_name + '.docx')  # 创建.docx文件
+    # convert_doc_to_docx(doc_path, docx_path)
+    word = win32.Dispatch("Word.Application")
+    word.Visible = False
+    doc = word.Documents.Open(filePath)
+    text = doc.Content.Text
 
     #识别word中的图片
     # for shape in doc.InlineShapes:
@@ -77,27 +75,16 @@ def handleWord(doc_path):
                 # result = reader.readtext(image_path)
                 # text = ' '.join([item[1] for item in result])
 
-    # doc.Close()
-    # word.Quit()
+    doc.Close()
+    word.Quit()
 
-    # 加载文档
-    docx = Document(docx_path)
-    matched_data = []
     # 读取文档中的所有段落并匹配敏感信息
+    sensitive_data = re.findall(all_regex, text)
+    if isinstance(sensitive_data, list):   # 可能得到元组列表，先转换成字符串列表，不然file.write报错
+        sensitive_data = ' '.join([' '.join(t) for t in sensitive_data])   # 转换成一整个字符串
+        sensitive_data = sensitive_data.split()  # 按空格切割data，转变成列表，方便保存
 
-    for para in docx.paragraphs:
-        match = re.match(all_regex, para.text)
-
-        if match:
-            matched_data.append(match.group())
-
-    # sensitive_data = re.findall(all_regex, text)
-    # if isinstance(sensitive_data, list):   # 可能得到元组列表，先转换成字符串列表，不然file.write报错
-    #     sensitive_data = ' '.join([' '.join(t) for t in sensitive_data])   # 转换成一整个字符串
-    #     sensitive_data = sensitive_data.split()  # 按空格切割data，转变成列表，方便保存
-    #保存文件
-    print(matched_data)
-    save_to_txt(matched_data, output_path)
+    save_to_txt(sensitive_data, output_path)
 
 
 def save_to_txt(data, output_path):
