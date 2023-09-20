@@ -14,9 +14,19 @@ password_regex = r"(password|pwd|密码|psw|authorization|authentication|key|sec
 
 email_regex = r"((邮箱|email).*[=:：])?[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$"
 
+
 #http_regex = r"^https?:\/\/([a-z0-9][-a-z0-9]{0,62}(\.[a-z0-9][-a-z0-9]{0,62})+)(:\d+)?(\/\S*)?$"
 http_regex = r"(url|URL)?=?\'?(https?://(www\.)?[\w\d\.-]+:?\d+)"
 all_regex = re.compile(f"({ip_regex}|{port2_regex}|{username_regex}|{password_regex}|{email_regex}|{http_regex}|{jdbc_regex})")
+
+
+email_regex = r"(邮箱|email)?[:：]?[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$"
+
+http_regex = r"^(https|http|ssh|rdp):\/\/([a-z0-9][-a-z0-9]{0,62}(\.[a-z0-9][-a-z0-9]{0,62})+)(:\d+)?(\/\S*)?$"
+# ssh_regex - r"^https?:\/\/([a-z0-9][-a-z0-9]{0,62}(\.[a-z0-9][-a-z0-9]{0,62})+)(:\d+)?(\/\S*)?$"
+
+
+all_regex = re.compile(f"({ip_regex}|{port2_regex}|{username_regex}|{password_regex}|{email_regex}|{http_regex})")
 
 '''
     提取铭感词
@@ -50,12 +60,14 @@ if  __name__ == '__main__':
     # re.group()
 
     texLis = [
+
              "我们今天吃什么username:kevin,sdhsjkdhsajdhs",
               "我的邮箱:kevinang@qq.com.cn",
               "学校的ip地址:192.168.173.10",
               "db.url=jdbc:mysql://localhost:3306/mydb",
               "http://leetcode.cn/circle",
               "http://www.leetcode.cn"
+              "rdp://10.10.1.101"
               ]
     res = regexSensitive(texLis)
     for i in res:

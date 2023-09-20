@@ -33,43 +33,7 @@ output_path = os.path.join(current_directory, "outputWps.txt")
 
 
 def handleWps(filePath):
-
-
-    # 创建一个WPS应用对象
-    app = wps
-
-    # 打开指定的WPS文档
-    doc = app.open('path/to/document.docx')
-
-    word = win32.Dispatch("Word.Application")
-    word.Visible = False
-    doc = word.Documents.Open(filePath)
-    text = doc.Content.Text
-
-    # 识别word中的图片
-    # for shape in doc.InlineShapes:
-    #     # Check if shape has image data
-    #     if shape.Type == 3:  # Type 3 indicates the shape has an image.
-    #         image_path = os.path.join(current_directory, f'image_{shape.Range.Start}.png')
-    #         shape.Range.Copy()  # Copy image data
-    #         # Use clipboard to get the image data and save to file
-    #         from PIL import ImageGrab
-    #         img = ImageGrab.grabclipboard()  # Gets image from clipboard
-    #         if img:
-    #             img.save(image_path, 'PNG')
-    #             text += str(OCR(image_path))
-    # reader = easyocr.Reader(['en', 'ch_sim'])  # specify language - 'en' for English
-    # result = reader.readtext(image_path)
-    # text = ' '.join([item[1] for item in result])
-
-    doc.Close()
-    word.Quit()
-    sensitive_data = re.findall(all_regex, text)
-    if isinstance(sensitive_data, list):  # 可能得到元组列表，先转换成字符串列表，不然file.write报错
-        sensitive_data = ' '.join([' '.join(t) for t in sensitive_data])  # 转换成一整个字符串
-        sensitive_data = sensitive_data.split()  # 按空格切割data，转变成列表，方便保存
-
-    save_to_txt(sensitive_data, output_path)
+    pass
 
 
 def save_to_txt(data, output_path):
