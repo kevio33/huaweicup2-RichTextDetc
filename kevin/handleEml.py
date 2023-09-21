@@ -74,7 +74,7 @@ def handleEml(fileName,filePath):
 
     outputfile = open('kevin/output.txt','w',encoding='utf-8')
     outputfile.write(str(res))
-    outputfile.close
+    outputfile.close()
 
     emlFile.close()
 
@@ -94,16 +94,16 @@ def handleAttach():
                 suffix = extend[-1]
                 res = []
                 if suffix == 'jpg' or extend == 'png': #这里重复逻辑判断
-                    res = OCR(it.name,filePath)
+                    res = OCR(filePath)
                     res = regexSensitive(res)
                 elif suffix == 'xlsx': #这里重复逻辑判断
-                    res = readExcel(it.name,filePath)
+                    res = readExcel(filePath)
                     # res = regexSensitive(res)
                 elif suffix == 'txt':
                     res = handleTxt(it.name,filePath)
                     # res = regexSensitive(res)
                 elif suffix == 'doc':
-                    res = handleWord(filePath)
+                    res = handleWord(it.name, filePath)
                 elif suffix == 'ppt':
                     res = readPPt(fileName=extend[0],filePath=filePath,isPPT=True)
                     res = regexSensitive(res)
