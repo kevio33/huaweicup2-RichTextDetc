@@ -2,7 +2,6 @@
     读
 '''
 from flanker import mime
-from flanker.addresslib import address
 import os
 from kevin.handlePic import OCR
 from kevin.handlePPT import readPPt
