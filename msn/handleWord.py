@@ -17,8 +17,6 @@ password_regex = r"密码：\w+"
 stuId_regex = r"学号：\w{10}"
 defaultPwd1_regex = r"默认密码：(?=.*[a-zA-Z])(?=.*\d)(?=.*[@]).{8,16}"#
 defaultPwd2_regex = r"初始密码为\w{6}"  # 出现6次，没有+代表固定次数
-# picture1_regex = r"服务器\d :"
-# picture2_regex = r"端口\d:"
 name_regex = r"虚拟专用网名称“\w{4,}”"
 sharePwd_regex = r"共享密钥为“\w+”"
 
@@ -26,10 +24,6 @@ sharePwd_regex = r"共享密钥为“\w+”"
 # 合并所有正则
 all_regex = re.compile(
     f"({ip_regex}|{port1_regex}|{port2_regex}|{username_regex}|{password_regex}|{defaultPwd1_regex}|{sharePwd_regex}|{defaultPwd2_regex}|{stuId_regex}|{name_regex})")
-
-# 路径
-current_directory = os.path.dirname(os.path.abspath(__file__))
-output_path = os.path.join(current_directory, "outputWord.txt")
 
 
 # .doc转.docx
@@ -49,60 +43,42 @@ def convert_doc_to_docx(doc_file, docx_file):
     # 将.doc文件转换为.docx文件
 
 
-def handleWord(filePath):
-    #转.docx类型
-    # base_name = os.path.splitext(os.path.basename(doc_path))[0]  # 获取文件名称
-    # docx_path = os.path.join(current_directory, base_name + '.docx')  # 创建.docx文件
-    # convert_doc_to_docx(doc_path, docx_path)
+def readWord(filePath):
     word = win32.Dispatch("Word.Application")
     word.Visible = False
     doc = word.Documents.Open(filePath)
     text = doc.Content.Text
-
-    #识别word中的图片
-    # for shape in doc.InlineShapes:
-    #     # Check if shape has image data
-    #     if shape.Type == 3:  # Type 3 indicates the shape has an image.
-    #         image_path = os.path.join(current_directory, f'image_{shape.Range.Start}.png')
-    #         shape.Range.Copy()  # Copy image data
-    #         # Use clipboard to get the image data and save to file
-    #         from PIL import ImageGrab
-    #         img = ImageGrab.grabclipboard()  # Gets image from clipboard
-    #         if img:
-    #             img.save(image_path, 'PNG')
-    #             text += str(OCR(image_path))
-                # reader = easyocr.Reader(['en', 'ch_sim'])  # specify language - 'en' for English
-                # result = reader.readtext(image_path)
-                # text = ' '.join([item[1] for item in result])
-
     doc.Close()
     word.Quit()
+    return text
 
+
+def handleWord(file_name, file_path):
+    text = readWord(file_path)
     # 读取文档中的所有段落并匹配敏感信息
     sensitive_data = re.findall(all_regex, text)
     if isinstance(sensitive_data, list):   # 可能得到元组列表，先转换成字符串列表，不然file.write报错
         sensitive_data = ' '.join([' '.join(t) for t in sensitive_data])   # 转换成一整个字符串
         sensitive_data = sensitive_data.split()  # 按空格切割data，转变成列表，方便保存
-
-    save_to_txt(sensitive_data, output_path)
-
-
-def save_to_txt(data, output_path):
-    with open(output_path, 'r+') as file:   # 文件可读可写模式打开
-        content = file.read()
-        file.seek(0, 2)   # 使文件指针移动到文件的末尾(追加)
-        if content:
-            file.write('---------------------------------------\n')
-        for item in data:
-            file.write(item + '\n')
+    # 保存路径
+    current_directory = os.path.dirname(os.path.abspath(__file__))
+    output_path = os.path.join(current_directory, "{}.txt".format(file_name))
+    # 保存文件
+    save_to_txt(sensitive_data, output_path, file_name)
 
 
-if __name__ == "__main__":
-    # 示例
-    # word_path = "D:\huaweicup\huaweicup2-RichTextDetc\赛题材料\office\Android手机VPN安装指南.doc"#msn
-    word_path = "E:\huaweicup\huaweicup2-RichTextDetc\赛题材料\office\Android手机VPN安装指南.doc"#kevin
+def save_to_txt(data, output_path, file_name):
+    dict = {}
+    with open(output_path, 'w') as file:
+        # for item in data:
+        #     file.write(item + '\n')
+        dict[file_name] = data
+        file.write(str(dict) + '\n')
 
-    # print(handleWord(word_path))
-    # text = handleWord(word_path)
+
+# if __name__ == "__main__":
+#     # 示例
+#      handleWord('Android手机VPN安装指南.doc', 'D:\huaweicup\huaweicup2-RichTextDetc\赛题材料\office\Android手机VPN安装指南.doc')
+#     # text = handleWord(word_path)
 
     
