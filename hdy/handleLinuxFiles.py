@@ -69,8 +69,8 @@ def write_files_to_txt(file_list, output_file, no_need_to_handle_file):
 if __name__ == "__main__":
 
     # 尝试匹配敏感词
-    directory_path = 'D:\sundries\huaweiCup\contentCheck\huaweicup2-RichTextDetc\赛题材料\linux'
+    directory_path = 'D:\huaweicup\huaweicup2-RichTextDetc\赛题材料\linux'
     output_file = 'output.txt'
 
-    handler = LinuxFilesHandler(directory_path, output_file);
-    handler.write_files_to_txt();
+    handler = LinuxFilesHandler(directory_path, output_file)
+    handler.write_files_to_txt()
