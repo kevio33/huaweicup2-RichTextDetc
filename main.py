@@ -157,10 +157,13 @@ def write_result():
                     # print(res_str)
                     res_str = json.dumps(res_str,ensure_ascii=False)
                     new_dict = json.loads(res_str)#转换字符串为字典
+                    # new_dict = new_dict.replace("\'", "\"")
                     total_res.append(new_dict)
                 except Exception:
                     pass
-    json.dump(total_res,file_write,ensure_ascii=False)
+    res_dic = {}
+    res_dic["提取结果"] = total_res
+    json.dump(res_dic,file_write,ensure_ascii=False)
     file_write.close()
                 
                 
