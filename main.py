@@ -124,7 +124,6 @@ def handleQue():
                     handle_src.handle_file()
                 except Exception:
                     pass
-            pass
         else:
             #没有后缀的名字
             if i.fileName == 'linux':
@@ -180,8 +179,8 @@ if __name__ == "__main__":
                 rarfile_path = os.path.abspath(item)
                 break
     # unzipFile('题目1：富文本敏感信息泄露检测.rar','.') #解压缩文件
-    unzipFile(rarfile_path,'.') #解压缩文件
-    listUnzipFile('.\赛题材料')#分析代码
+    unzipFile(rarfile_path,'./赛题材料') #解压缩文件
+    listUnzipFile('./赛题材料')#分析代码
     handleQue() # 处理队列里面记录的文件
     write_result()#写入最终结果文件
     end_time = time.time()
