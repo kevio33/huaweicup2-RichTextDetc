@@ -1,5 +1,5 @@
 import os
-# import regSensitive
+from regSensitive import regexSensitive
 
 # import sys
 
@@ -21,7 +21,7 @@ class LinuxFilesHandler:
         file_list = []
         print(self.directory)
         for root, dirs, files in os.walk(self.directory):
-            print(files)
+            # print(files)
             for file in files:
                 file_list.append(os.path.join(root, file))
         return file_list
@@ -32,50 +32,53 @@ class LinuxFilesHandler:
             for file_path in self.get_file_list():
                 file_name = os.path.basename(file_path)
                 # with open(file_path, 'r') as f:
-                f = open(file_path,'r')
-                # content = f.read()
-                if file_name in self.no_need_to_handle_file:
-                    content = f.read()
-                    output_dic[file_name] = content
-                    # file.write(f'File Name: {file_name}\n')
-                    # file.write(f'Content:\n{content}\n\n')
-                else:
-                    # sensitive = regSensitive.regexSensitive(content)
-                    # file.write(f'File Name: {file_name}\n')
-                    # file.write(f'Content:\n{sensitive}\n\n')
-                    lis = []
-                    for line in f.readlines():
-                        lis.append(line.strip())
-                    res = regexSensitive(lis)
-                    output_dic[file_name] = res
+                try:
+                    f = open(file_path,'r')
+                    # content = f.read()
+                    if file_name in self.no_need_to_handle_file:
+                        content = f.read()
+                        output_dic[file_name] = content
+                        # file.write(f'File Name: {file_name}\n')
+                        # file.write(f'Content:\n{content}\n\n')
+                    else:
+                        # sensitive = regSensitive.regexSensitive(content)
+                        # file.write(f'File Name: {file_name}\n')
+                        # file.write(f'Content:\n{sensitive}\n\n')
+                        lis = []
+                        for line in f.readlines():
+                            lis.append(line.strip())
+                        res = regexSensitive(lis)
+                        output_dic[file_name] = res
+                except Exception:
+                    output_dic[file_name] = Exception
                 f.close()
             file.write(str(output_dic))
 
 
 
-def get_file_list(directory):
-    file_list = []
-    for root, dirs, files in os.walk(directory):
-        for file in files:
-            file_list.append(os.path.join(root, file))
-    return file_list
+# def get_file_list(directory):
+#     file_list = []
+#     for root, dirs, files in os.walk(directory):
+#         for file in files:
+#             file_list.append(os.path.join(root, file))
+#     return file_list
 
-def write_files_to_txt(file_list, output_file, no_need_to_handle_file):
-    with open(output_file, 'w') as file:
-        for file_path in file_list:
-            if os.path.basename(file_path) in no_need_to_handle_file:
-                with open(file_path, 'r') as f:
-                    content = f.read()
-                    file_name = os.path.basename(file_path)
-                    file.write(f'File Name: {file_name}\n')
-                    file.write(f'Content:\n{content}\n\n')
-            else:
-                with open(file_path, 'r') as f:
-                    content = f.read()
-                    sensitive = regSensitive.regexSensitive(content)
-                    file_name = os.path.basename(file_path)
-                    file.write(f'File Name: {file_name}\n')
-                    file.write(f'Content:\n{sensitive}\n\n')
+# def write_files_to_txt(file_list, output_file, no_need_to_handle_file):
+#     with open(output_file, 'w') as file:
+#         for file_path in file_list:
+#             if os.path.basename(file_path) in no_need_to_handle_file:
+#                 with open(file_path, 'r') as f:
+#                     content = f.read()
+#                     file_name = os.path.basename(file_path)
+#                     file.write(f'File Name: {file_name}\n')
+#                     file.write(f'Content:\n{content}\n\n')
+#             else:
+#                 with open(file_path, 'r') as f:
+#                     content = f.read()
+#                     sensitive = regSensitive.regexSensitive(content)
+#                     file_name = os.path.basename(file_path)
+#                     file.write(f'File Name: {file_name}\n')
+#                     file.write(f'Content:\n{sensitive}\n\n')
 
 
 

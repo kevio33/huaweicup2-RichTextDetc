@@ -6,10 +6,10 @@ import re
 # 定义敏感数据的正则表达式
 ip_regex = r"((ip|服务器地址|服务器|ip地址|IP|IP地址).*[=:：])?\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}" # IP 地址
 port2_regex = r"\d{0,5}(port|端口号|端口)[=:：]?\d{1,5}" #端口号
-jdbc_regex = r"(jdbc:mysql://(localhost:\d{4}|\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})/mydb)"
+jdbc_regex = r"(url)?[: =]*(jdbc:mysql://(localhost:\d{4}|\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})/mydb)"
 
 username_regex = r"(账号|username|name|用户名|用户|root|admin)[=:：]{1}[^,\n]+" # 匹配用户名，长度需要确定？可能包含中文字符
-password_regex = r"(password|pwd|密码|psw|authorization|authentication|key|secure|salt|密钥|auth)[=:：]?[a-zA-Z_0-9,]+"
+password_regex = r"(password|pwd|密码|psw|authorization|authentication|key|keys|secure|salt|密钥|auth)[=:：\s]*[a-zA-Z_0-9,@]+"
 
 
 email_regex = r"((邮箱|email).*[=:：])?[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$"
@@ -17,7 +17,6 @@ email_regex = r"((邮箱|email).*[=:：])?[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$"
 
 #http_regex = r"^https?:\/\/([a-z0-9][-a-z0-9]{0,62}(\.[a-z0-9][-a-z0-9]{0,62})+)(:\d+)?(\/\S*)?$"
 http_regex = r"(url|URL)?=?\'?(https?://(www\.)?[\w\d\.-]+:?\d+)"
-all_regex = re.compile(f"({ip_regex}|{port2_regex}|{username_regex}|{password_regex}|{email_regex}|{http_regex}|{jdbc_regex})")
 
 
 email_regex = r"(邮箱|email)?[:：]?[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$"
@@ -26,7 +25,8 @@ http_regex = r"^(https|http|ssh|rdp):\/\/([a-z0-9][-a-z0-9]{0,62}(\.[a-z0-9][-a-
 # ssh_regex - r"^https?:\/\/([a-z0-9][-a-z0-9]{0,62}(\.[a-z0-9][-a-z0-9]{0,62})+)(:\d+)?(\/\S*)?$"
 
 
-all_regex = re.compile(f"({ip_regex}|{port2_regex}|{username_regex}|{password_regex}|{email_regex}|{http_regex})")
+# all_regex = re.compile(f"({ip_regex}|{port2_regex}|{username_regex}|{password_regex}|{email_regex}|{http_regex})")
+all_regex = re.compile(f"({ip_regex}|{port2_regex}|{username_regex}|{password_regex}|{email_regex}|{http_regex}|{jdbc_regex})")
 
 '''
     提取铭感词
@@ -67,7 +67,9 @@ if  __name__ == '__main__':
               "db.url=jdbc:mysql://localhost:3306/mydb",
               "http://leetcode.cn/circle",
               "http://www.leetcode.cn"
-              "rdp://10.10.1.101"
+              "rdp://10.10.1.101",
+              "password: lab@998877",
+              "url: jdbc:mysql://localhost:3306/mydb"
               ]
     res = regexSensitive(texLis)
     for i in res:
